@@ -32,6 +32,8 @@
       <p class="status error">{{ errorMessage() }}</p>
     } @else if (loading()) {
       <p class="status">Loading articles...</p>
+    } @else if (!isBrowser) {
+      <p class="status">Browse our latest creations after the page loads.</p>
     } @else if (!hasResults()) {
       <p class="status">No articles match your search.</p>
     } @else {

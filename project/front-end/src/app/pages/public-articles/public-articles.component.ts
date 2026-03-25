@@ -1,5 +1,5 @@
-import { Component, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID, computed, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -34,15 +34,26 @@ export class PublicArticlesComponent {
   readonly errorMessage = signal<string | null>(null);
   readonly hasResults = computed(() => this.articles().length > 0);
   readonly currentYear = new Date().getFullYear();
+  readonly isBrowser: boolean;
 
-  constructor(private readonly publicArticleService: PublicArticleService) {
+  constructor(
+    private readonly publicArticleService: PublicArticleService,
+    @Inject(PLATFORM_ID) platformId: object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+
     this.searchControl.valueChanges
       .pipe(debounceTime(250), distinctUntilChanged())
       .subscribe((value) => {
         this.searchTerm.set(value);
       });
 
-    void this.loadArticles();
+    if (this.isBrowser) {
+      void this.loadArticles();
+      return;
+    }
+
+    this.loading.set(false);
   }
 
   async loadArticles(): Promise<void> {
