@@ -7,12 +7,6 @@ id("io.spring.dependency-management") version "1.1.7"
 group = "org.zouari"
 version = "1.0.0"
 
-java {
-toolchain {
-languageVersion = JavaLanguageVersion.of(26)
-}
-}
-
 repositories {
 mavenCentral()
 }
@@ -30,4 +24,8 @@ testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 tasks.withType<Test> {
 useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+  options.release.set(21)
 }
