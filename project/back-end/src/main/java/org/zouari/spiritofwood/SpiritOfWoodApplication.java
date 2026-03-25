@@ -50,7 +50,7 @@ import org.zouari.spiritofwood.config.AppProperties;
 @SpringBootApplication
 public final class SpiritOfWoodApplication {
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     DotenvPropertyLoader.load();
     SpringApplication.run(SpiritOfWoodApplication.class, args);
   }

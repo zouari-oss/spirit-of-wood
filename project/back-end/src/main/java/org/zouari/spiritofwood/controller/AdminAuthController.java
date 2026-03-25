@@ -14,12 +14,12 @@ public final class AdminAuthController {
 
   private final AdminAuthService adminAuthService;
 
-  public AdminAuthController(AdminAuthService adminAuthService) {
+  public AdminAuthController(final AdminAuthService adminAuthService) {
     this.adminAuthService = adminAuthService;
   }
 
   @PostMapping("/login")
-  public AdminLoginResponse login(@RequestBody AdminLoginRequest request) {
+  public AdminLoginResponse login(@RequestBody final AdminLoginRequest request) {
     final String token = adminAuthService.login(request.email(), request.password());
     return new AdminLoginResponse(token);
   }

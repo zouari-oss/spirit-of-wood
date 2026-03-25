@@ -38,7 +38,7 @@ public class Article {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -46,7 +46,7 @@ public class Article {
     return description;
   }
 
-  public void setDescription(String description) {
+  public void setDescription(final String description) {
     this.description = description;
   }
 
@@ -54,7 +54,7 @@ public class Article {
     return image;
   }
 
-  public void setImage(String image) {
+  public void setImage(final String image) {
     this.image = image;
   }
 
@@ -62,7 +62,7 @@ public class Article {
     return price;
   }
 
-  public void setPrice(BigDecimal price) {
+  public void setPrice(final BigDecimal price) {
     this.price = price;
   }
 }

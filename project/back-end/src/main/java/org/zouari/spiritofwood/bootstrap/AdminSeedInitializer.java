@@ -16,16 +16,16 @@ public final class AdminSeedInitializer implements ApplicationRunner {
   private final AdminAuthService adminAuthService;
 
   public AdminSeedInitializer(
-      AdminSeedProperties adminSeedProperties,
-      AdminUserRepository adminUserRepository,
-      AdminAuthService adminAuthService) {
+      final AdminSeedProperties adminSeedProperties,
+      final AdminUserRepository adminUserRepository,
+      final AdminAuthService adminAuthService) {
     this.adminSeedProperties = adminSeedProperties;
     this.adminUserRepository = adminUserRepository;
     this.adminAuthService = adminAuthService;
   }
 
   @Override
-  public void run(ApplicationArguments args) {
+  public void run(final ApplicationArguments args) {
     final String email = normalize(adminSeedProperties.email());
     final String password = adminSeedProperties.password();
 
@@ -44,7 +44,7 @@ public final class AdminSeedInitializer implements ApplicationRunner {
     adminUserRepository.save(adminUser);
   }
 
-  private String normalize(String email) {
+  private String normalize(final String email) {
     if (email == null || email.isBlank()) {
       return null;
     }

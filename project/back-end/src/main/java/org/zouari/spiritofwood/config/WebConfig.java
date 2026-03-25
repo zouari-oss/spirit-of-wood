@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
   private String allowedOrigins;
 
   @Override
-  public void addCorsMappings(CorsRegistry registry) {
+  public void addCorsMappings(final CorsRegistry registry) {
     registry.addMapping("/api/**")
         .allowedOrigins(Arrays.stream(allowedOrigins.split(","))
             .map(String::trim)

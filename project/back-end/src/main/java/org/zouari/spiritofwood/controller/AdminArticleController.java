@@ -26,13 +26,14 @@ public final class AdminArticleController {
   private final AdminAuthService adminAuthService;
   private final ArticleService articleService;
 
-  public AdminArticleController(AdminAuthService adminAuthService, ArticleService articleService) {
+  public AdminArticleController(final AdminAuthService adminAuthService, final ArticleService articleService) {
     this.adminAuthService = adminAuthService;
     this.articleService = articleService;
   }
 
   @GetMapping
-  public List<Article> list(@RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
+  public List<Article> list(
+      @RequestHeader(value = "Authorization", required = false) final String authorizationHeader) {
     adminAuthService.validateBearerToken(authorizationHeader);
     return articleService.list();
   }
@@ -40,17 +41,17 @@ public final class AdminArticleController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Article create(
-      @RequestHeader(value = "Authorization", required = false) String authorizationHeader,
-      @RequestBody ArticleRequest request) {
+      @RequestHeader(value = "Authorization", required = false) final String authorizationHeader,
+      @RequestBody final ArticleRequest request) {
     adminAuthService.validateBearerToken(authorizationHeader);
     return articleService.create(request);
   }
 
   @PutMapping("/{id}")
   public Article update(
-      @RequestHeader(value = "Authorization", required = false) String authorizationHeader,
-      @PathVariable UUID id,
-      @RequestBody ArticleRequest request) {
+      @RequestHeader(value = "Authorization", required = false) final String authorizationHeader,
+      @PathVariable final UUID id,
+      @RequestBody final ArticleRequest request) {
     adminAuthService.validateBearerToken(authorizationHeader);
     return articleService.update(id, request);
   }
@@ -58,8 +59,8 @@ public final class AdminArticleController {
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(
-      @RequestHeader(value = "Authorization", required = false) String authorizationHeader,
-      @PathVariable UUID id) {
+      @RequestHeader(value = "Authorization", required = false) final String authorizationHeader,
+      @PathVariable final UUID id) {
     adminAuthService.validateBearerToken(authorizationHeader);
     articleService.delete(id);
   }

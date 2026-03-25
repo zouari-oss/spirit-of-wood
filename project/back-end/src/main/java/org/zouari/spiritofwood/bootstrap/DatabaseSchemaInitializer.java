@@ -17,12 +17,12 @@ public final class DatabaseSchemaInitializer implements ApplicationRunner {
 
   private final DataSource dataSource;
 
-  public DatabaseSchemaInitializer(DataSource dataSource) {
+  public DatabaseSchemaInitializer(final DataSource dataSource) {
     this.dataSource = dataSource;
   }
 
   @Override
-  public void run(ApplicationArguments args) throws Exception {
+  public void run(final ApplicationArguments args) throws Exception {
     try (Connection connection = dataSource.getConnection()) {
       if (!isPostgres(connection)) {
         return;
@@ -38,12 +38,12 @@ public final class DatabaseSchemaInitializer implements ApplicationRunner {
     }
   }
 
-  private boolean isPostgres(Connection connection) throws SQLException {
+  private boolean isPostgres(final Connection connection) throws SQLException {
     final String name = connection.getMetaData().getDatabaseProductName();
     return name != null && name.toLowerCase().contains("postgresql");
   }
 
-  private boolean articlesTableExists(Connection connection) throws SQLException {
+  private boolean articlesTableExists(final Connection connection) throws SQLException {
     final DatabaseMetaData metaData = connection.getMetaData();
 
     try (ResultSet tables = metaData.getTables(null, null, "articles", new String[] { "TABLE" })) {

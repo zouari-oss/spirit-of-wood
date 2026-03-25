@@ -20,7 +20,7 @@ public final class ArticleService {
 
   private final ArticleRepository articleRepository;
 
-  public ArticleService(ArticleRepository articleRepository) {
+  public ArticleService(final ArticleRepository articleRepository) {
     this.articleRepository = articleRepository;
   }
 
@@ -30,7 +30,7 @@ public final class ArticleService {
         .toList();
   }
 
-  public List<Article> listPublic(String query) {
+  public List<Article> listPublic(final String query) {
     final String normalizedQuery = query == null ? "" : query.trim().toLowerCase();
 
     return articleRepository.findAll().stream()
@@ -41,7 +41,7 @@ public final class ArticleService {
         .toList();
   }
 
-  public Article create(ArticleRequest request) {
+  public Article create(final ArticleRequest request) {
     validateRequest(request);
 
     final Article article = new Article();
@@ -53,7 +53,7 @@ public final class ArticleService {
     return articleRepository.save(article);
   }
 
-  public Article update(UUID id, ArticleRequest request) {
+  public Article update(final UUID id, final ArticleRequest request) {
     validateRequest(request);
 
     final Article article = articleRepository.findById(id)
@@ -67,7 +67,7 @@ public final class ArticleService {
     return articleRepository.save(article);
   }
 
-  public void delete(UUID id) {
+  public void delete(final UUID id) {
     if (!articleRepository.existsById(id)) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found");
     }
@@ -75,7 +75,7 @@ public final class ArticleService {
     articleRepository.deleteById(id);
   }
 
-  private void validateRequest(ArticleRequest request) {
+  private void validateRequest(final ArticleRequest request) {
     if (request == null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body is required");
     }
@@ -90,7 +90,7 @@ public final class ArticleService {
     }
   }
 
-  private void validateText(String field, String value) {
+  private void validateText(final String field, final String value) {
     if (value == null || value.isBlank()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, field + " is required");
     }
@@ -109,7 +109,7 @@ public final class ArticleService {
     }
   }
 
-  private void validateImage(String field, String value) {
+  private void validateImage(final String field, final String value) {
     validateText(field, value);
 
     final String trimmed = value.trim();

@@ -7,9 +7,9 @@ import org.zouari.spiritofwood.config.AppProperties;
 @RestController
 public final class RootController {
 
-  private AppProperties appProperties;
+  private final AppProperties appProperties;
 
-  public RootController(AppProperties appProperties) {
+  public RootController(final AppProperties appProperties) {
     this.appProperties = appProperties;
   }
 

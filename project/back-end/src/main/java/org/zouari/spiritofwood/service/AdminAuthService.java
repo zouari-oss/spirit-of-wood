@@ -18,11 +18,11 @@ public final class AdminAuthService {
   private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
   private final Set<String> activeTokens = ConcurrentHashMap.newKeySet();
 
-  public AdminAuthService(AdminUserRepository adminUserRepository) {
+  public AdminAuthService(final AdminUserRepository adminUserRepository) {
     this.adminUserRepository = adminUserRepository;
   }
 
-  public String login(String email, String password) {
+  public String login(final String email, final String password) {
     if (email == null || password == null || email.isBlank() || password.isBlank()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email and password are required");
     }
@@ -39,11 +39,11 @@ public final class AdminAuthService {
     return token;
   }
 
-  public String hashPassword(String plainPassword) {
+  public String hashPassword(final String plainPassword) {
     return passwordEncoder.encode(plainPassword);
   }
 
-  public void validateBearerToken(String authorizationHeader) {
+  public void validateBearerToken(final String authorizationHeader) {
     if (authorizationHeader == null || authorizationHeader.isBlank()) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing authorization header");
     }

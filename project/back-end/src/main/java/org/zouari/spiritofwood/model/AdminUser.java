@@ -29,7 +29,7 @@ public class AdminUser {
     return email;
   }
 
-  public void setEmail(String email) {
+  public void setEmail(final String email) {
     this.email = email;
   }
 
@@ -37,7 +37,7 @@ public class AdminUser {
     return passwordHash;
   }
 
-  public void setPasswordHash(String passwordHash) {
+  public void setPasswordHash(final String passwordHash) {
     this.passwordHash = passwordHash;
   }
 }

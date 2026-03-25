@@ -14,7 +14,7 @@ public final class DotenvPropertyLoader {
     loadFrom(Path.of(".env"));
   }
 
-  private static void loadFrom(Path dotenvPath) {
+  private static void loadFrom(final Path dotenvPath) {
     if (!Files.exists(dotenvPath)) {
       return;
     }
@@ -22,11 +22,11 @@ public final class DotenvPropertyLoader {
     final List<String> lines;
     try {
       lines = Files.readAllLines(dotenvPath);
-    } catch (IOException ignored) {
+    } catch (final IOException ignored) {
       return;
     }
 
-    for (String line : lines) {
+    for (final String line : lines) {
       final String trimmed = line.trim();
       if (trimmed.isEmpty() || trimmed.startsWith("#")) {
         continue;
