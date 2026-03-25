@@ -3,6 +3,9 @@ package org.zouari.spiritofwood;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.zouari.spiritofwood.config.AdminSeedProperties;
+import org.zouari.spiritofwood.config.DotenvPropertyLoader;
+import org.zouari.spiritofwood.config.AppProperties;
 
 /**
  * Entry point for the Spirit of Wood Spring Boot application.
@@ -43,11 +46,12 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  * // ./gradlew bootRun
  * }</pre>
  */
-@ConfigurationPropertiesScan
+@ConfigurationPropertiesScan(basePackageClasses = { AppProperties.class, AdminSeedProperties.class })
 @SpringBootApplication
 public final class SpiritOfWoodApplication {
 
   public static void main(String[] args) {
+    DotenvPropertyLoader.load();
     SpringApplication.run(SpiritOfWoodApplication.class, args);
   }
 } // SpringBootApplication final class

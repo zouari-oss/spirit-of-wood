@@ -1,0 +1,79 @@
+<section class="dashboard-page">
+  <header class="topbar reveal-up">
+    <div class="title-wrap">
+      <img src="/logo.png" alt="Spirit Of Wood" class="logo" />
+      <div>
+        <p class="eyebrow">Spirit Of Wood</p>
+        <h1>Crafting Dashboard</h1>
+      </div>
+    </div>
+    <button type="button" class="logout" (click)="logout()">Logout</button>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <div class="layout">
+    <article class="form-card reveal-up" style="--delay: 80ms">
+      <h2>{{ editingId() ? 'Refine Article' : 'Create Article' }}</h2>
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <label>
+          Name
+          <input type="text" formControlName="name" />
+        </label>
+
+        <label>
+          Description
+          <textarea rows="4" formControlName="description"></textarea>
+        </label>
+
+        <label>
+          Image (URL or data:image;base64,...)
+          <textarea rows="4" formControlName="image"></textarea>
+        </label>
+
+        <label>
+          Price
+          <input type="number" min="0" step="0.01" formControlName="price" />
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="saving()" class="primary-btn">
+            {{ saving() ? 'Saving...' : editingId() ? 'Update' : 'Create' }}
+          </button>
+          @if (editingId()) {
+            <button type="button" class="secondary" (click)="cancelEdit()">Cancel</button>
+          }
+        </div>
+      </form>
+    </article>
+
+    <article class="list-card reveal-up" style="--delay: 140ms">
+      <h2>Article Collection</h2>
+
+      @if (loading()) {
+        <p>Loading articles...</p>
+      } @else if (!articles().length) {
+        <p>No articles yet.</p>
+      } @else {
+        <div class="article-list">
+          @for (article of articles(); track article.id) {
+            <div class="article-item">
+              <img [src]="article.image" [alt]="article.name" />
+              <div class="details">
+                <h3>{{ article.name }}</h3>
+                <p>{{ article.description }}</p>
+                <strong>{{ article.price | number:'1.2-2' }} TND</strong>
+              </div>
+              <div class="actions">
+                <button type="button" class="secondary" (click)="edit(article)">Edit</button>
+                <button type="button" class="danger" (click)="remove(article.id)">Delete</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </article>
+  </div>
+</section>

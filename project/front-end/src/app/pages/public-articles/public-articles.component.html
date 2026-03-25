@@ -1,0 +1,63 @@
+<section class="public-page">
+  <nav class="top-nav">
+    <div class="nav-content">
+      <a class="brand" routerLink="/" aria-label="Spirit Of Wood home">
+        <img src="/logo.png" alt="Spirit Of Wood" class="logo" />
+        <span>Spirit Of Wood</span>
+      </a>
+    </div>
+  </nav>
+
+  <header class="hero reveal-up">
+    <div class="hero-content">
+      <p class="eyebrow">Spirit Of Wood</p>
+      <h1>Discover handcrafted wooden pieces</h1>
+      <p class="subtitle">
+        Browse our curated collection of premium creations, made with care and built to last.
+      </p>
+
+      <div class="search-wrap reveal-up" style="--delay: 120ms">
+        <input
+          type="search"
+          [formControl]="searchControl"
+          placeholder="Search by name or description..."
+          aria-label="Search articles"
+        />
+      </div>
+    </div>
+  </header>
+
+  <main class="catalog">
+    @if (errorMessage()) {
+      <p class="status error">{{ errorMessage() }}</p>
+    } @else if (loading()) {
+      <p class="status">Loading articles...</p>
+    } @else if (!hasResults()) {
+      <p class="status">No articles match your search.</p>
+    } @else {
+      <div class="grid">
+        @for (article of articles(); track trackById($index, article)) {
+          <article class="card reveal-up" style="--delay: 140ms">
+            <div class="image-shell">
+              <img [src]="article.image" [alt]="article.name" loading="lazy" />
+            </div>
+            <div class="body">
+              <h2>{{ article.name }}</h2>
+              <p>{{ article.description }}</p>
+              <div class="meta">
+                <span class="price">{{ article.price | number : '1.2-2' }} TND</span>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>© {{ currentYear }} Spirit Of Wood. All rights reserved.</p>
+      <p>Crafted with passion for timeless wood design.</p>
+    </div>
+  </footer>
+</section>
