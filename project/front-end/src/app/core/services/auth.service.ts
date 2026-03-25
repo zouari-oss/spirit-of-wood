@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { AdminLoginRequest, AdminLoginResponse } from '../models/auth.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly baseUrl = 'http://localhost:8080/api/admin';
+  private readonly baseUrl = `${environment.apiBaseUrl}/api/admin`;
   private readonly tokenSignal = signal<string | null>(null);
   private readonly isBrowser: boolean;
 

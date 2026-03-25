@@ -3,10 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Article, ArticleRequest } from '../models/article.model';
 import { AuthService } from './auth.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
-  private readonly baseUrl = 'http://localhost:8080/api/admin/articles';
+  private readonly baseUrl = `${environment.apiBaseUrl}/api/admin/articles`;
 
   constructor(private readonly http: HttpClient, private readonly authService: AuthService) {}
 
