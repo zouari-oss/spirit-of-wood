@@ -15,7 +15,21 @@ import { PublicArticleService } from '../../core/services/public-article.service
 })
 export class PublicArticlesComponent {
   readonly searchControl = new FormControl('', { nonNullable: true });
-  readonly articles = signal<Article[]>([]);
+  readonly allArticles = signal<Article[]>([]);
+  readonly searchTerm = signal('');
+  readonly articles = computed(() => {
+    const query = this.searchTerm().trim().toLowerCase();
+    const items = this.allArticles();
+
+    if (!query) {
+      return items;
+    }
+
+    return items.filter(
+      (article) =>
+        article.name.toLowerCase().includes(query) || article.description.toLowerCase().includes(query)
+    );
+  });
   readonly loading = signal(true);
   readonly errorMessage = signal<string | null>(null);
   readonly hasResults = computed(() => this.articles().length > 0);
@@ -25,19 +39,19 @@ export class PublicArticlesComponent {
     this.searchControl.valueChanges
       .pipe(debounceTime(250), distinctUntilChanged())
       .subscribe((value) => {
-        void this.loadArticles(value);
+        this.searchTerm.set(value);
       });
 
-    void this.loadArticles('');
+    void this.loadArticles();
   }
 
-  async loadArticles(query: string): Promise<void> {
+  async loadArticles(): Promise<void> {
     this.loading.set(true);
     this.errorMessage.set(null);
 
     try {
-      const data = await this.publicArticleService.list(query);
-      this.articles.set(data);
+      const data = await this.publicArticleService.list();
+      this.allArticles.set(data);
     } catch (error) {
       const message =
         error instanceof HttpErrorResponse

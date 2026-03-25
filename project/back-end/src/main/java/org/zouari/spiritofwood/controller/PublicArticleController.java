@@ -7,7 +7,6 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zouari.spiritofwood.model.Article;
 import org.zouari.spiritofwood.service.ArticleService;
@@ -23,8 +22,8 @@ public final class PublicArticleController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Article>> list(@RequestParam(value = "q", required = false) final String query) {
-    final List<Article> articles = articleService.listPublic(query);
+  public ResponseEntity<List<Article>> list() {
+    final List<Article> articles = articleService.list();
     return ResponseEntity.ok()
         .cacheControl(CacheControl.maxAge(0, TimeUnit.SECONDS).mustRevalidate().noStore())
         .body(articles);

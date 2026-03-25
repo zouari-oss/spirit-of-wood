@@ -30,17 +30,6 @@ public final class ArticleService {
         .toList();
   }
 
-  public List<Article> listPublic(final String query) {
-    final String normalizedQuery = query == null ? "" : query.trim().toLowerCase();
-
-    return articleRepository.findAll().stream()
-        .filter(article -> normalizedQuery.isBlank()
-            || article.getName().toLowerCase().contains(normalizedQuery)
-            || article.getDescription().toLowerCase().contains(normalizedQuery))
-        .sorted(Comparator.comparing(Article::getName, String.CASE_INSENSITIVE_ORDER))
-        .toList();
-  }
-
   public Article create(final ArticleRequest request) {
     validateRequest(request);
 

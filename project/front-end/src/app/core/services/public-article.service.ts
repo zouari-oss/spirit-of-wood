@@ -10,9 +10,7 @@ export class PublicArticleService {
 
   constructor(private readonly http: HttpClient) {}
 
-  list(query: string): Promise<Article[]> {
-    const q = query.trim();
-    const url = q ? `${this.baseUrl}?q=${encodeURIComponent(q)}` : this.baseUrl;
-    return firstValueFrom(this.http.get<Article[]>(url));
+  list(): Promise<Article[]> {
+    return firstValueFrom(this.http.get<Article[]>(this.baseUrl));
   }
 }
