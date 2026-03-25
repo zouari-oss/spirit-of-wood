@@ -30,7 +30,19 @@ public final class AdminAuthService {
     final AdminUser adminUser = adminUserRepository.findByEmail(email.trim().toLowerCase())
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
 
-    if (!passwordEncoder.matches(password, adminUser.getPasswordHash())) {
+    final String passwordHash = adminUser.getPasswordHash();
+    if (passwordHash == null || passwordHash.isBlank()) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+    }
+
+    final boolean matches;
+    try {
+      matches = passwordEncoder.matches(password, passwordHash);
+    } catch (IllegalArgumentException exception) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials", exception);
+    }
+
+    if (!matches) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
     }
 
